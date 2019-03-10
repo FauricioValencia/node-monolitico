@@ -6,7 +6,10 @@ const userSchema= new Schema ({
     name:{type: String, required: [true, 'Name necessary']},
     email: {type: String, required: [true, 'Email necessary']},
     password: {type: String, required: [true, 'Password necessary']},
-    state: {type: Boolean, required: [true, 'State necessary']}
+    state: {type: Boolean, required: [true, 'State necessary']},
+    datos:[],
+    isStudy: {type: Boolean, default: false},
+    
 })
 
 userSchema.methods.toJSON = function () {

@@ -2,7 +2,7 @@
 //  Puerto
 // =========================
 
-process.env.PORT = process.env.PORT  || 3000;
+process.env.PORT = process.env.PORT || 3000;
 
 // ======================
 //       Entorno
@@ -31,7 +31,7 @@ process.env.SEED_TOKEN = process.env.SEED_TOKEN || 'token_Super_Secret';
 // ======================
 let urlDB;
 if (process.env.NODE_ENV === 'dev') {
-  urlDB = 'mongodb://localhost:27017/coffee';
+  urlDB = 'mongodb://localhost:27017/tesis';
 } else {
   urlDB = process.env.MONGODB;
 }
