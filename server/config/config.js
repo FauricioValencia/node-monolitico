@@ -33,7 +33,7 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
   urlDB = 'mongodb://localhost:27017/tesis';
 } else {
-  urlDB = process.env.MONGODB;
+  urlDB = 'mongodb://<Fauricio>:<julian123>@ds163905.mlab.com:63905/back-tesis';
 }
 
 process.env.MONGODB = urlDB;
