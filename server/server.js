@@ -17,7 +17,7 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 app.set('view engine', 'hbs');
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://<Fauricio>:<julian123>@ds163905.mlab.com:63905/back-tesis', { useNewUrlParser: true })
+mongoose.connect('mongodb://Fauricio:julian123@ds163905.mlab.com:63905/back-tesis', { useNewUrlParser: true })
 .then(() => {
   winston.info('Connected to Database Successfully');
   return app.listen(process.env.PORT, () => {
