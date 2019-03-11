@@ -4,13 +4,14 @@ const { Schema } = mongoose;
 
 const userSchema= new Schema ({
     name:{type: String, required: [true, 'Name necessary']},
+    lastName:{type: String, required: [true, 'lastName necessary']},
     email: {type: String, required: [true, 'Email necessary']},
+    cedula: {type: String, required: [true, 'Cedula es necesaria perrito']},
+    phone: {type: Number, required:[true, 'el telefono es necesario bebesita']},
     password: {type: String, required: [true, 'Password necessary']},
     state: {type: Boolean, required: [true, 'State necessary']},
-    cedula: {type: String, required: [true, 'Cedula es necesaria perrito']},
     datos:[],
     isStudy: {type: Boolean, default: false},
-    
 })
 
 userSchema.methods.toJSON = function () {
