@@ -8,7 +8,7 @@ exports.saveUser = (req, res) => {
   const data = req.body;
   return services.saveUserPromise(data)
     .then(response => res.json(response))
-    .catch(err => res.status(400).json(err));
+    .catch(err => res.json(err));
 };
 
 exports.updateUser = (req, res) => {
