@@ -45,8 +45,6 @@ exports.saveUserPromise = data => new Promise((resolve, reject) => {
   exports.getUsersPromise = () => new Promise((resolve, reject) => {
     console.log('entro para obtener todos los usuarios');
     User.find({ state: true })
-      // .skip(Number(sky))
-      // .limit(Number(lim))
       .exec((err, users) => {
         if (err) {
           return reject.status(400).json({
@@ -54,18 +52,31 @@ exports.saveUserPromise = data => new Promise((resolve, reject) => {
             err,
           });
         }
-        // return User.countDocuments({ state: true }, (errCount, count) => {
-          // if (errCount) {
-          //   const error = {
-          //     ok: false,
-          //     errCount,
-          //     status: 400,
-          //   };
-          //   return reject(error);
-          // }
           return resolve(users, { ok: true });
         });
-      // });
+  });
+  exports.getUSerByCedulaPromise = (cedula) => new Promise((resolve, reject) => {
+    console.log('entro a buscar todas las cedulas: ', cedula);
+    User.find({ cedula })
+      .exec((err, usersDB) => {
+        console.log('usersDB: ', usersDB);
+        if (err) {
+          return reject.status(400).json({
+            ok: false,
+            err,
+          });
+        }
+        if(usersDB.length=== 0){
+          
+        const error = {
+          ok: false,
+          message: 'no existe el usuario mi rey',
+          status: 400,
+        };
+        return reject(error);
+        }
+          return resolve(usersDB, { ok: true });
+        });
   });
 
   exports.deleteUSerPromise = id => new Promise((resolve, reject) => {

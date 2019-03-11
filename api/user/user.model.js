@@ -7,6 +7,7 @@ const userSchema= new Schema ({
     email: {type: String, required: [true, 'Email necessary']},
     password: {type: String, required: [true, 'Password necessary']},
     state: {type: Boolean, required: [true, 'State necessary']},
+    cedula: {type: String, required: [true, 'Cedula es necesaria perrito']},
     datos:[],
     isStudy: {type: Boolean, default: false},
     
