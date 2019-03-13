@@ -4,7 +4,6 @@ const User = require('./user.model');
 const services = require('./user.services');
 
 exports.saveUser = (req, res) => {
-    console.log('entro perros');
     const data = req.body;
     return services.saveUserPromise(data)
       .then(response => res.json(response))
@@ -25,7 +24,6 @@ exports.saveUser = (req, res) => {
     // return services.getUsersPromise(sky, lim)
     return services.getUsersPromise()
       .then(response => {
-          console.log('respueta al obtener el usuario', response);
         return res.json({ ...response, ok: true })}
       )
       .catch(err => res.status(400).json(err));

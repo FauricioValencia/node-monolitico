@@ -5,30 +5,51 @@ const bcrypt = require('bcrypt');
 
 const User = require('./user.model');
 exports.saveUserPromise = data => new Promise((resolve, reject) => {
-    const temp = {
-      ...data,
-      password: bcrypt.hashSync(data.password, 10),
-    };
-    const user = new User(temp);
-    user.save((err, userDB) => {
-      if (err) {
-        const error = {
-          ok: false,
-          err,
-          status: 400,
-        };
-        return reject(error);
-      }
-      const ok = {
-        userDB,
-        ok: true,
+  const temp = {
+    ...data,
+    password: bcrypt.hashSync(data.password, 10),
+  };
+  const user = new User(temp);
+  user.save((err, userDB) => {
+    if (err) {
+      const error = {
+        ok: false,
+        err,
+        status: 400,
       };
-      return resolve(ok);
-    });
+      return reject(error);
+    }
+    const ok = {
+      userDB,
+      ok: true,
+    };
+    return resolve(ok);
   });
+});
 
-  exports.updateUserPromise = (id, body) => new Promise((resolve, reject) => {
-    User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, userDB) => {
+exports.updateUserPromise = (id, body) => new Promise((resolve, reject) => {
+  User.findByIdAndUpdate(id, body, {
+    new: true,
+    runValidators: true
+  }, (err, userDB) => {
+    if (err) {
+      const error = {
+        ok: false,
+        err,
+        status: 400,
+      };
+      return reject(error);
+    }
+    return resolve(userDB);
+  });
+});
+
+// exports.getUsersPromise = (sky, lim) => new Promise((resolve, reject) => {
+exports.getUsersPromise = () => new Promise((resolve, reject) => {
+  User.find({
+      state: true
+    })
+    .exec((err, users) => {
       if (err) {
         const error = {
           ok: false,
@@ -37,58 +58,39 @@ exports.saveUserPromise = data => new Promise((resolve, reject) => {
         };
         return reject(error);
       }
-      return resolve(userDB);
-    });
-  });
-
-  // exports.getUsersPromise = (sky, lim) => new Promise((resolve, reject) => {
-  exports.getUsersPromise = () => new Promise((resolve, reject) => {
-    console.log('entro para obtener todos los usuarios');
-    User.find({ state: true })
-      // .skip(Number(sky))
-      // .limit(Number(lim))
-      .exec((err, users) => {
-        if (err) {
-          return reject.status(400).json({
-            ok: false,
-            err,
-          });
-        }
-        // return User.countDocuments({ state: true }, (errCount, count) => {
-          // if (errCount) {
-          //   const error = {
-          //     ok: false,
-          //     errCount,
-          //     status: 400,
-          //   };
-          //   return reject(error);
-          // }
-          return resolve(users, { ok: true });
-        });
-      // });
-  });
-
-  exports.deleteUSerPromise = id => new Promise((resolve, reject) => {
-    User.findByIdAndUpdate(id, { state: false }, { new: true }, (err, userDB) => {
-      if (err) {
-        return reject.status(400).json({
-          ok: false,
-          err,
-        });
-      }
-      if (!userDB) {
-        return reject.status(400).json({
-          status: 400,
-          ok: false,
-          err: {
-            message: 'El usuario no existe padre',
-          },
-        });
-      }
-      return resolve.json({
-        ok: true,
-        delete: userDB,
+      return resolve(users, {
+        ok: true
       });
     });
+});
+
+exports.deleteUSerPromise = id => new Promise((resolve, reject) => {
+  User.findByIdAndUpdate(id, {
+    state: false
+  }, {
+    new: true
+  }, (err, userDB) => {
+    if (err) {
+      const error = {
+        ok: false,
+        err,
+        status: 400,
+      };
+      return reject(error);
+    }
+    if (!userDB) {
+      let err = {
+        status: 400,
+        ok: false,
+        err: {
+          message: 'El usuario no existe padre',
+        },
+      }
+      return reject(err)
+    }
+    return resolve.json({
+      ok: true,
+      delete: userDB,
+    });
   });
-  
+});

@@ -8,11 +8,14 @@ exports.loginUserPromise = (email, password) => new Promise((resolve, reject) =>
     email,
   }, (err, userDB) => {
     if (err) {
-      return reject.status(500).json({
-        ok: false,
-        err,
-      });
-    }
+      let err ={
+        status:500,
+        ok:false,
+        err
+      }
+      return reject(err)
+      }
+    
     if (!userDB || !bcrypt.compareSync(password, userDB.password)) {
       let error ={
           status: 400,

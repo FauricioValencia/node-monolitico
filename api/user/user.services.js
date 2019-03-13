@@ -73,10 +73,12 @@ exports.getUsersPromise = () => new Promise((resolve, reject) => {
     })
     .exec((err, users) => {
       if (err) {
-        return reject.status(400).json({
+        const error = {
           ok: false,
           err,
-        });
+          status: 400,
+        };
+        return reject(error);
       }
       return resolve(users, {
         ok: true
