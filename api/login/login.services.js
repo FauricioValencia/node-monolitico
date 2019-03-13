@@ -14,12 +14,14 @@ exports.loginUserPromise = (email, password) => new Promise((resolve, reject) =>
       });
     }
     if (!userDB || !bcrypt.compareSync(password, userDB.password)) {
-      return reject.status(400).json({
-        ok: false,
-        err: {
-          message: 'Usuario o contraseña incorrectos',
-        },
-      });
+      let error ={
+          status: 400,
+          ok: false,
+          err: {
+            message: 'Usuario o contraseña incorrectos',
+          }
+      }
+      return reject(error);
     }
     const token = jwt.sign({
       user: userDB,
