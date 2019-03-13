@@ -89,10 +89,11 @@ exports.getUSerByCedulaPromise = (cedula) => new Promise((resolve, reject) => {
     })
     .exec((err, usersDB) => {
       if (err) {
-        return reject.status(400).json({
+        let err ={
           ok: false,
           err,
-        });
+        }
+        return reject(err);
       }
       if (usersDB.length === 0) {
 
@@ -116,23 +117,26 @@ exports.deleteUSerPromise = id => new Promise((resolve, reject) => {
     new: true
   }, (err, userDB) => {
     if (err) {
-      return reject.status(400).json({
+      let err ={
         ok: false,
         err,
-      });
+      }
+      return reject(err);
     }
     if (!userDB) {
-      return reject.status(400).json({
+      let err ={
         status: 400,
         ok: false,
         err: {
           message: 'El usuario no existe padre',
         },
-      });
+      }
+      return reject(err)
     }
-    return resolve.json({
+    let ok={
       ok: true,
       delete: userDB,
-    });
+    }
+    return resolve(ok)
   });
 });
