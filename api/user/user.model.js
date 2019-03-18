@@ -7,11 +7,12 @@ const userSchema= new Schema ({
     lastName:{type: String, required: [true, 'lastName necessary']},
     email: {type: String, required: [true, 'Email necessary']},
     cedula: {type: String, required: [true, 'Cedula es necesaria perrito']},
-    phone: {type: Number, required:[true, 'el telefono es necesario bebesita']},
+    phone: {type: String, required:[true, 'el telefono es necesario bebesita']},
     password: {type: String, required: [true, 'Password necessary']},
     state: {type: Boolean, required: [true, 'State necessary']},
     datos:[],
     isStudy: {type: Boolean, default: false},
+    searchHistory: []
 })
 
 userSchema.methods.toJSON = function () {

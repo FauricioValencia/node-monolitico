@@ -38,6 +38,18 @@ exports.getUsers = (req, res) => {
     })
     .catch(err => res.status(400).json(err));
 };
+exports.getUSerByCedulaUpdateSearchHistory = (req, res) => {
+  let cedula = req.params.cedula;
+  let dataUser = req.user;
+  return services.getUSerByCedulaUpdateSearchHistoryPromise(cedula, dataUser)
+    .then((response)=>{
+      return res.json({
+        ...response,
+        ok: true
+      })
+    })
+    .catch((e)=>res.status(400).json(e))
+}
 exports.getUSerByCedula = (req, res) => {
   let cedula = req.params.cedula;
   return services.getUSerByCedulaPromise(cedula)

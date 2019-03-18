@@ -85,13 +85,54 @@ exports.getUsersPromise = () => new Promise((resolve, reject) => {
       });
     });
 });
+exports.getUSerByCedulaUpdateSearchHistoryPromise = (cedula, dataUSer) => new Promise((resolve, reject) => {
+  User.find({
+      cedula
+    })
+    .exec((err, usersDB) => {
+      if (err) {
+        let err = {
+          ok: false,
+          err,
+        }
+        return reject(err);
+      }
+      if (usersDB.length === 0) {
+
+        const error = {
+          ok: false,
+          message: 'no existe el usuario mi rey',
+          status: 400,
+        };
+        return reject(error);
+      }
+      if (usersDB) {
+        dataUSer.searchHistory.unshift({
+          cedula,
+          name: dataUSer.name,
+          lastName: dataUSer.lastName
+        })
+        let newArray = {
+          ...dataUSer,
+        }
+        User.findOneAndUpdate({
+          email: dataUSer.email
+        }, newArray, null, (err, doc, any) => {
+          return resolve(usersDB, {
+            ok: true
+          });
+        })
+      }
+    });
+});
+
 exports.getUSerByCedulaPromise = (cedula) => new Promise((resolve, reject) => {
   User.find({
       cedula
     })
     .exec((err, usersDB) => {
       if (err) {
-        let err ={
+        let err = {
           ok: false,
           err,
         }
@@ -119,14 +160,14 @@ exports.deleteUSerPromise = id => new Promise((resolve, reject) => {
     new: true
   }, (err, userDB) => {
     if (err) {
-      let err ={
+      let err = {
         ok: false,
         err,
       }
       return reject(err);
     }
     if (!userDB) {
-      let err ={
+      let err = {
         status: 400,
         ok: false,
         err: {
@@ -135,7 +176,7 @@ exports.deleteUSerPromise = id => new Promise((resolve, reject) => {
       }
       return reject(err)
     }
-    let ok={
+    let ok = {
       ok: true,
       delete: userDB,
     }
