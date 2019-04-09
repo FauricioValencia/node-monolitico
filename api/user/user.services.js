@@ -71,6 +71,7 @@ exports.getUsersPromise = () => new Promise((resolve, reject) => {
   User.find({
       state: true
     })
+    .populate('searchHistory')
     .exec((err, users) => {
       if (err) {
         const error = {
@@ -80,8 +81,10 @@ exports.getUsersPromise = () => new Promise((resolve, reject) => {
         };
         return reject(error);
       }
-      return resolve(users, {
-        ok: true
+      return resolve({
+        status: 200,
+        ok: true,
+        data: users
       });
     });
 });

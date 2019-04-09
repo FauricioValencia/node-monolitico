@@ -26,15 +26,11 @@ exports.updateUser = (req, res) => {
 };
 
 exports.getUsers = (req, res) => {
-  // const { sky } = req.query || 0;
-  // const { lim } = req.query || 5;
-  // return services.getUsersPromise(sky, lim)
   return services.getUsersPromise()
     .then(response => {
-      return res.json({
-        ...response,
-        ok: true
-      })
+      return res.status(200).json(
+        response
+      )
     })
     .catch(err => res.status(400).json(err));
 };
@@ -42,24 +38,24 @@ exports.getUSerByCedulaUpdateSearchHistory = (req, res) => {
   let cedula = req.params.cedula;
   let dataUser = req.user;
   return services.getUSerByCedulaUpdateSearchHistoryPromise(cedula, dataUser)
-    .then((response)=>{
+    .then((response) => {
       return res.json({
         ...response,
         ok: true
       })
     })
-    .catch((e)=>res.status(400).json(e))
+    .catch((e) => res.status(400).json(e))
 }
 exports.getUSerByCedula = (req, res) => {
   let cedula = req.params.cedula;
   return services.getUSerByCedulaPromise(cedula)
-    .then((response)=>{
+    .then((response) => {
       return res.json({
         ...response,
         ok: true
       })
     })
-    .catch((e)=>res.status(400).json(e))
+    .catch((e) => res.status(400).json(e))
 }
 
 exports.deleteUser = (req, res) => {

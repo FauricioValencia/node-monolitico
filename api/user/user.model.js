@@ -12,7 +12,7 @@ const userSchema= new Schema ({
     state: {type: Boolean, required: [true, 'State necessary']},
     datos:[],
     isStudy: {type: Boolean, default: false},
-    searchHistory: []
+    searchHistory: [{type:Schema.Types.ObjectId, ref:'User'}],
 })
 
 userSchema.methods.toJSON = function () {

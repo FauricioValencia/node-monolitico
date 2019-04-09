@@ -1,20 +1,35 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const { Schema } = mongoose;
+const {
+  Schema
+} = mongoose;
 
-const posibleInquilinoSchema= new Schema ({
-    name:{type: String, required: [true, 'Name necessary']},
-    phone:{type: String, required: [true, 'Phone necessary']},
-    email: {type: String, required: [true, 'Email necessary']},
-    cedula: {type: String, required: [true, 'Cedula necessary']},
+const posibleInquilinoSchema = new Schema({
+  tenant: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  state: {
+    type: Schema.Types.Boolean,
+    default: false
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  createDate: {
+    type: Schema.Types.Number,
+  }
 })
 
 posibleInquilinoSchema.methods.toJSON = function () {
-    const userThis = this;
-    const userObject = userThis.toObject();
-    return userObject;
-  };
+  const userThis = this;
+  const userObject = userThis.toObject();
+  return userObject;
+};
 
-posibleInquilinoSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser unico' });
+posibleInquilinoSchema.plugin(uniqueValidator, {
+  message: '{PATH} debe de ser unico'
+});
 
 module.exports = mongoose.model('Estudio', posibleInquilinoSchema);
