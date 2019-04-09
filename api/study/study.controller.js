@@ -1,16 +1,20 @@
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-const User = require('./user.model');
-const services = require('./user.services');
+const User = require('./studys.model');
+const services = require('./study.services');
 
-exports.saveUser = (req, res) => {
+exports.tenantStudy = (req, res) => {
+
     const data = req.body;
-    return services.saveUserPromise(data)
+    let dataUser = req.user;
+    // console.log('data:', data);
+    // console.log('data usuario: ', dataUser);
+    return services.tenantStudyPromise(data, dataUser)
       .then(response => res.json(response))
       .catch(err => res.status(400).json(err));
   };
 
-  exports.updateUser = (req, res) => {
+exports.updateUser = (req, res) => {
     const { id } = req.params;
     const { body } = _.pick(req.body, ['email', 'password']);
     return services.updateUserPromise(id, body)
@@ -19,10 +23,8 @@ exports.saveUser = (req, res) => {
   };
 
   exports.getUsers = (req, res) => {
-    // const { sky } = req.query || 0;
-    // const { lim } = req.query || 5;
-    // return services.getUsersPromise(sky, lim)
-    return services.getUsersPromise()
+    let author = req.user._id;
+    return services.getStudyStenantPromise(author)
       .then(response => {
         return res.json({ ...response, ok: true })}
       )

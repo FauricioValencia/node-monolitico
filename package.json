@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server",
-    "nodemon": "nodemon server/server"
+    "nodemon": "nodemon server/server",
+    "config": "nvm use v9.10.0"
+
   },
   "author": "Julian Fauricio Valencia Marin",
   "license": "MIT",
