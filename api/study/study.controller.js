@@ -1,14 +1,12 @@
-const bcrypt = require('bcrypt');
+
 const _ = require('underscore');
-const User = require('./studys.model');
+
 const services = require('./study.services');
 
 exports.tenantStudy = (req, res) => {
 
     const data = req.body;
     let dataUser = req.user;
-    // console.log('data:', data);
-    // console.log('data usuario: ', dataUser);
     return services.tenantStudyPromise(data, dataUser)
       .then(response => res.json(response))
       .catch(err => res.status(400).json(err));
