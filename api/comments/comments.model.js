@@ -13,6 +13,9 @@ const comments = new Schema({
   },
   dateComment: {
     type: Schema.Types.Number
+  },
+  dataComment: {
+    type: Schema.Types.String
   }
 });
 
