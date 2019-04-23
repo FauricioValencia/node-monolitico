@@ -8,10 +8,12 @@
 const user = require("../api/user");
 const login = require("../api/login");
 const study = require("../api/study");
+const comments = require("../api/comments");
 
 module.exports = app => {
   // Insert routes below
   app.use("/user", user);
   app.use("/login", login);
   app.use("/study", study);
+  app.use("/comment", comments);
 };

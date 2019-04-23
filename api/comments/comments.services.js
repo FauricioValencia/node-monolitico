@@ -2,9 +2,12 @@ const commentsTenant = require("./comments.model.js");
 
 exports.createCommentPromise = (data, dataUser) =>
   new Promise((resolve, reject) => {
+    console.log("data:", data);
+    console.log("dataUser:", dataUser);
     let bodyComment = {
       authorComment: dataUser._id,
       tenant: data.tenant,
+      dataComment: data.dataComment,
       dateComment: new Date()
     };
     const CommentsTenant = new commentsTenant(bodyComment);
@@ -27,6 +30,7 @@ exports.createCommentPromise = (data, dataUser) =>
 
 exports.getCommentPromise = idTenant =>
   new Promise((resolve, reject) => {
+    console.log("idTenant: ", idTenant);
     commentsTenant.find({ tenant: idTenant }, (err, commentsTenant) => {
       if (err) {
         const error = {

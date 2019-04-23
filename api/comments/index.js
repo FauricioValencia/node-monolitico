@@ -7,3 +7,5 @@ const router = new Router();
 router.get("/:id", verifyToken, controller.getComments);
 router.post("/", verifyToken, controller.createComment );
 
+module.exports = router;
+
