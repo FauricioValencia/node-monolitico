@@ -16,17 +16,20 @@ const posibleInquilinoSchema = new Schema({
     ref: "User"
   },
   createDate: {
-    type: Schema.Types.Number
+    type: Schema.Types.String,
+    default: ""
   },
   proceso: {
     type: Schema.Types.Number,
     default: 0
   },
   phoneTenant: {
-    type: Schema.Types.Number
+    type: Schema.Types.String,
+    default: ""
   },
   emailTenant: {
-    type: Schema.Types.String
+    type: Schema.Types.String,
+    default: ""
   }
 });
 
@@ -40,4 +43,4 @@ posibleInquilinoSchema.plugin(uniqueValidator, {
   message: "{PATH} debe de ser unico"
 });
 
-module.exports = mongoose.model("Estudio", posibleInquilinoSchema);
+module.exports = mongoose.model("UserStudy", posibleInquilinoSchema);
