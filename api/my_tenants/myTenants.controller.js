@@ -3,8 +3,8 @@ const services = require("./myTenants.services");
 exports.addTenantMyTenantsAuthor = (req, res) => {
   const data = req.body;
   let dataUser = req.user;
-  console.log('data body: ', data);
-  console.log('dataUser: ',dataUser );
+  // console.log('data body: ', data);
+  // console.log('dataUser: ',dataUser );
   return services
     .addTenantMyTenantsAuthorPromise(data, dataUser)
     .then(response => res.json(response))

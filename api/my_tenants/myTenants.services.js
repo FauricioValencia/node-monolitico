@@ -4,7 +4,9 @@ const userStudy = require("../study/studys.model.js");
 exports.addTenantMyTenantsAuthorPromise = (data, author) =>
   new Promise((resolve, reject) => {
     //  body que se va a gregar en caso de que el estado del estudio se true, es decir que ya hayan realizado el pago.
-    console.log('lo que llega a la promesa: ', data, author);
+    console.log("lo que llega a la promesa: ");
+    console.log("data: ", data.tenant);
+    console.log("author: ", author._id);
 
     userStudy.find(
       { tenant: data.tenant, author: author._id },
@@ -12,11 +14,24 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
         if (err) {
           const error = {
             ok: false,
-            message: "No se ha encontrado la solicitud de estudio del inquilino"
+            message:
+              "No se ha encontrado la solicitud de estudio del inquilino",
+            err
           };
           return reject(error);
         } else {
-          console.log('si se encontro la solicitud de estudio: ', dataTenantStudy);
+          console.log(
+            "si se encontro la solicitud de estudio: ",
+            dataTenantStudy
+          );
+          if (dataTenantStudy.length === 0) {
+            const noData = {
+              ok: false,
+              message: "No se encontro solicitud de estudio.",
+              solicitudStudio: dataTenantStudy
+            };
+            return reject(noData);
+          }
           console.log("dataTenantStudy: ", dataTenantStudy);
           if (!Boolean(dataTenantStudy.state)) {
             const error = {

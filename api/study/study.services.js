@@ -61,6 +61,12 @@ exports.tenantStudyPromise = (data, dataUser) =>
             };
             return reject(error);
           }
+          const ok = {
+            ok: true,
+            message: "Se ha hecho la solicitud de estudio satisfactoriamente",
+            solicitudEstudio: saveStudy
+          };
+          return resolve(ok);
           // transporter
           //   .sendMail({
           //     to: "julian.f.valencia@hotmail.com",
@@ -73,14 +79,7 @@ exports.tenantStudyPromise = (data, dataUser) =>
           //   )
           //   .then(e => {
           //     console.log(e);
-          //     const ok = {
-          //       sendEmail: e,
-          //       ok: true,
-          //       message:
-          //         "Se ha hecho la solicitud de estudio satisfactoriamente",
-          //       solicitudEstudio: saveStudy
-          //     };
-          //     return resolve(ok);
+
           //   });
           // client.sendMail(email, (err, info) => {
           //   if (err) {
