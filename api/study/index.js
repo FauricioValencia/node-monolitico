@@ -4,8 +4,8 @@ const { verifyToken } = require("../../server/middlewares/autenticacion");
 
 const router = new Router();
 
-router.get("/", verifyToken, controller.getUsers);
-router.post("/", verifyToken, controller.tenantStudy);
+router.get("/",  controller.getStudiesByAuthor);
+router.post("/",  controller.tenantStudy);
 router.put("/:id", controller.updateUser);
 
 module.exports = router;

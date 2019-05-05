@@ -20,7 +20,7 @@ exports.updateUser = (req, res) => {
       .catch(err => res.status(400).json(err));
   };
 
-  exports.getUsers = (req, res) => {
+  exports.getStudiesByAuthor = (req, res) => {
     let author = req.user._id;
     return services.getStudyStenantPromise(author)
       .then(response => {

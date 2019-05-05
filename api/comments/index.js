@@ -4,8 +4,7 @@ const { verifyToken } = require("../../server/middlewares/autenticacion.js");
 
 const router = new Router();
 
-router.get("/:id", verifyToken, controller.getComments);
-router.post("/", verifyToken, controller.createComment );
+router.get("/:id", controller.getComments);
+router.post("/", controller.createComment);
 
 module.exports = router;
-

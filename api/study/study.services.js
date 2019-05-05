@@ -1,19 +1,37 @@
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+// var sgTransport = require('nodemailer-sendgrid-transport');
+
+const options = {
+  auth: {
+    api_user: "6P_8pOxdT7CS71lJ2xdayg",
+    api_key:
+      "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"
+  }
+};
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
+      api_user: "FauricioValencia",
       api_key:
-        "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"
+        "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"
     }
   })
 );
+const client = nodemailer.createTransport(sendgridTransport(options));
+
 // sirve para filtrar los datos que quiero y por ende elimina los que noq uiero del objeto
 // const _ = require('underscore');
 
 const UserStudy = require("./studys.model");
-
+var email = {
+  from: "julian.fau.valencia@gmail.com",
+  to: "julian.f.valencia@hotmail.com",
+  subject: "Hello",
+  text: "Hello world",
+  html: "<b>Hello world</b>"
+};
 // se le pasa como parametros en el data : el id del inquilino, el id del autor que hace la busqueda, y dataUSer se pasa el id de la busqueda, el token
 exports.tenantStudyPromise = (data, dataUser) =>
   new Promise((resolve, reject) => {
@@ -43,25 +61,36 @@ exports.tenantStudyPromise = (data, dataUser) =>
             };
             return reject(error);
           }
-          transporter
-            .sendMail({
-              to: "julian.fau.valencia@gmail.com",
-              from: "julian.f.valencia@hotmail.com",
-              subject: "Nueva solicitud de estudio",
-              html: "<h1>Hay una nueva solicitud de estudio</h1>"
-            })
-            .catch(e =>
-              console.log("Error al enviar el email de notifcacion: ", e)
-            )
-            .then(() => {
-              const ok = {
-                ok: true,
-                message:
-                  "Se ha hecho la solicitud de estudio satisfactoriamente",
-                solicitudEstudio: saveStudy
-              };
-              return resolve(ok);
-            });
+          // transporter
+          //   .sendMail({
+          //     to: "julian.f.valencia@hotmail.com",
+          //     from: "julian.fau.valencia@gmail.com",
+          //     subject: "Nueva solicitud de estudio",
+          //     html: `<h1>Hay una nueva solicitud de estudio</h1>`
+          //   })
+          //   .catch(e =>
+          //     console.log("Error al enviar el email de notifcacion: ", e)
+          //   )
+          //   .then(e => {
+          //     console.log(e);
+          //     const ok = {
+          //       sendEmail: e,
+          //       ok: true,
+          //       message:
+          //         "Se ha hecho la solicitud de estudio satisfactoriamente",
+          //       solicitudEstudio: saveStudy
+          //     };
+          //     return resolve(ok);
+          //   });
+          // client.sendMail(email, (err, info) => {
+          //   if (err) {
+          //     console.log(err);
+          //     resolve(err);
+          //   } else {
+          //     console.log("Message sent: " + info.response);
+          //     resolve(info.response);
+          //   }
+          // });
         });
       } else {
         let ok = {
