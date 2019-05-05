@@ -11,10 +11,10 @@ exports.addTenantMyTenantsAuthor = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
-exports.getMy_tenantsByAuthor = async (req, res) => {
+exports.getMy_tenantsByAuthor = (req, res) => {
   let dataAuthor = req.user;
   return services
     .getMy_tenantsByAuthorPromise(dataAuthor)
-    .then(response => res.json(response))
+    .then(res => res.json(res))
     .catch(err => res.status(400).json(err));
 };

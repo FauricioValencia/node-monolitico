@@ -59,10 +59,7 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
   });
 exports.getMy_tenantsByAuthorPromise = dataAuthor =>
   new Promise((resolve, reject) => {
-    console.log("dataAuthor: ", dataAuthor);
-    myTenants.find({ author: dataAuthor._id }, (err, myTenants) => {
-      console.log("err: ", err);
-      console.log("myTenants: ", myTenants);
+    myTenants.find({ author: dataAuthor._id }, (err, tenants) => {
       if (err) {
         const error = {
           ok: false,
@@ -71,12 +68,7 @@ exports.getMy_tenantsByAuthorPromise = dataAuthor =>
           status: 400
         };
         return reject(error);
-      } else {
-        const ok = {
-          ok: true,
-          myTenants
-        };
-        return resolve({ ok: true });
       }
+      return resolve({ ok: true, tenants });
     });
   });

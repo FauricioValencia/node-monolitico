@@ -9,7 +9,7 @@ const posibleInquilinoSchema = new Schema({
   },
   state: {
     type: Schema.Types.Boolean,
-    default: false
+    default: true
   },
   author: {
     type: Schema.Types.ObjectId,
