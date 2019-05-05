@@ -4,9 +4,6 @@ const userStudy = require("../study/studys.model.js");
 exports.addTenantMyTenantsAuthorPromise = (data, author) =>
   new Promise((resolve, reject) => {
     //  body que se va a gregar en caso de que el estado del estudio se true, es decir que ya hayan realizado el pago.
-    console.log("lo que llega a la promesa: ");
-    console.log("data: ", data.tenant);
-    console.log("author: ", author._id);
 
     userStudy.find(
       { tenant: data.tenant, author: author._id },
@@ -20,10 +17,6 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
           };
           return reject(error);
         } else {
-          console.log(
-            "si se encontro la solicitud de estudio: ",
-            dataTenantStudy
-          );
           if (dataTenantStudy.length === 0) {
             const noData = {
               ok: false,
@@ -32,8 +25,7 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
             };
             return reject(noData);
           }
-          console.log("dataTenantStudy: ", dataTenantStudy);
-          if (!Boolean(dataTenantStudy.state)) {
+          if (!dataTenantStudy[0].state) {
             const error = {
               ok: false,
               message:
@@ -42,8 +34,8 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
             return reject(error);
           }
           let bodyMyTenant = {
-            author: "",
-            tenant: ""
+            author: author._id,
+            tenant: data.tenant
           };
           const MyTenant = new myTenants(bodyMyTenant);
           MyTenant.save((err, myTenantSave) => {
@@ -54,13 +46,12 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
               };
               return reject(error);
             }
-            let ok = {
+            return resolve({
               ok: true,
               message:
                 "Inquilino agregado satisfactoriamente a tu lista de inquilinos",
-              tenant: myTenantSave
-            };
-            return resolve(ok);
+              tenant: { ...myTenantSave._doc }
+            });
           });
         }
       }
@@ -68,7 +59,10 @@ exports.addTenantMyTenantsAuthorPromise = (data, author) =>
   });
 exports.getMy_tenantsByAuthorPromise = dataAuthor =>
   new Promise((resolve, reject) => {
+    console.log("dataAuthor: ", dataAuthor);
     myTenants.find({ author: dataAuthor._id }, (err, myTenants) => {
+      console.log("err: ", err);
+      console.log("myTenants: ", myTenants);
       if (err) {
         const error = {
           ok: false,
@@ -78,11 +72,11 @@ exports.getMy_tenantsByAuthorPromise = dataAuthor =>
         };
         return reject(error);
       } else {
-        let ok = {
+        const ok = {
           ok: true,
           myTenants
         };
-        resolve(ok);
+        return resolve({ ok: true });
       }
     });
   });

@@ -5,6 +5,6 @@ const controller = require("./myTenants.controller.js");
 const router = new Router();
 
 router.post("/", verifyToken, controller.addTenantMyTenantsAuthor);
-// router.get("/",  controller.getMy_tenantsByAuthor);
+router.get("/", verifyToken, controller.getMy_tenantsByAuthor);
 
 module.exports = router;

@@ -33,8 +33,8 @@ exports.loginUserPromise = (email, password) => new Promise((resolve, reject) =>
     }); // expira en 30 dias
     return resolve({
       ok: true,
-      userDB,
-      token,
+      ...userDB,
+      ...token,
     });
   });
 });
