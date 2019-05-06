@@ -69,6 +69,6 @@ exports.getMy_tenantsByAuthorPromise = dataAuthor =>
         };
         return reject(error);
       }
-      return resolve({ ok: true, tenants });
+      return resolve(tenants);
     });
   });

@@ -17,11 +17,11 @@ const myTenantsSchema = new Schema({
   }
 });
 
-myTenantsSchema.methods.toJSON = () => {
-  const userThis = this;
-  const userObject = userThis.toObject();
-  return userObject;
-};
+// myTenantsSchema.methods.toJSON = () => {
+//   const userThis = this;
+//   const userObject = userThis.toObject();
+//   return userObject;
+// };
 myTenantsSchema.plugin(uniqueValidator, {
   message: "{PATH} debe de ser unico"
 });
